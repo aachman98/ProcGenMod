@@ -82,3 +82,8 @@ and more...!
 
 ![sc_logo](https://github.com/aachman98/sc-img-data/raw/master/sc_logo.png "Sorcar")
 ![sc_showcase](https://github.com/aachman98/sc-img-data/raw/master/sc_showcase.png "Made in Sorcar")
+![sc_1](https://raw.githubusercontent.com/huiyao8761380/Sorcar/master/1%20Constants_Flow%20Control_Settings_Transform_Deletion_Object%20Operators.png)
+![sc_2](https://raw.githubusercontent.com/huiyao8761380/Sorcar/master/2%20Inpurts_Utilities.png)
+![sc_3](https://raw.githubusercontent.com/huiyao8761380/Sorcar/master/3%20Modifiers.png)
+![sc_4](https://raw.githubusercontent.com/huiyao8761380/Sorcar/master/4%20Selection.png)
+![sc_5](https://raw.githubusercontent.com/huiyao8761380/Sorcar/master/5%20Component%20Operators.png)
