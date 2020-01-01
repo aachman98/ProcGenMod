@@ -13,7 +13,7 @@ class ScUvSphere(Node, ScInputNode):
     in_segment: IntProperty(default=32, min=3, max=10000000, update=ScNode.update_value)
     in_ring: IntProperty(default=16, min=3, max=10000000, update=ScNode.update_value)
     in_radius: FloatProperty(default=1.0, min=0.0, update=ScNode.update_value)
-    in_WorldOrigin: BoolProperty(default=False, update=ScNode.update_value)
+    
 
     def init(self, context):
         super().init(context)
@@ -21,7 +21,7 @@ class ScUvSphere(Node, ScInputNode):
         self.inputs.new("ScNodeSocketNumber", "Segments").init("in_segment", True)
         self.inputs.new("ScNodeSocketNumber", "Rings").init("in_ring", True)
         self.inputs.new("ScNodeSocketNumber", "Radius").init("in_radius", True)
-        self.inputs.new("ScNodeSocketBool", "World Origin").init("in_WorldOrigin",True)
+        
     
     def error_condition(self):
         return (

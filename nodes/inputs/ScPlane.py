@@ -11,13 +11,13 @@ class ScPlane(Node, ScInputNode):
 
     in_uv: BoolProperty(default=True, update=ScNode.update_value)
     in_size: FloatProperty(default=2.0, min=0.0, update=ScNode.update_value)
-    in_WorldOrigin: BoolProperty(default=False, update=ScNode.update_value)
+    
 
     def init(self, context):
         super().init(context)
         self.inputs.new("ScNodeSocketBool", "Generate UVs").init("in_uv")
         self.inputs.new("ScNodeSocketNumber", "Size").init("in_size", True)
-        self.inputs.new("ScNodeSocketBool", "World Origin").init("in_WorldOrigin",True)
+        
 
     
     def error_condition(self):

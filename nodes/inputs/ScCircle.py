@@ -13,7 +13,7 @@ class ScCircle(Node, ScInputNode):
     in_type: EnumProperty(items=[("NOTHING", "Nothing", ""), ("NGON", "Ngon", ""), ("TRIFAN", "Triangle Fan", "")], default="NOTHING", update=ScNode.update_value)
     in_vertices: IntProperty(default=32, min=3, max=10000000, update=ScNode.update_value)
     in_radius: FloatProperty(default=1.0, min=0.0, update=ScNode.update_value)
-    in_WorldOrigin: BoolProperty(default=False, update=ScNode.update_value)
+    
 
     def init(self, context):
         super().init(context)
@@ -21,7 +21,7 @@ class ScCircle(Node, ScInputNode):
         self.inputs.new("ScNodeSocketString", "Fill Type").init("in_type")
         self.inputs.new("ScNodeSocketNumber", "Vertices").init("in_vertices", True)
         self.inputs.new("ScNodeSocketNumber", "Radius").init("in_radius", True)
-        self.inputs.new("ScNodeSocketBool", "World Origin").init("in_WorldOrigin",True)
+        
     
     def error_condition(self):
         return (

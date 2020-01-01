@@ -25,7 +25,16 @@ class ScEmpty(Node, ScInputNode):
         )
     
     def functionality(self):
-        bpy.ops.object.empty_add(
+        if (self.inputs["World Origin"].default_value):
+            bpy.ops.object.empty_add(
             type = self.inputs["Type"].default_value,
-            radius = self.inputs["Radius"].default_value
+            radius = self.inputs["Radius"].default_value,
+                    align='WORLD',
+                location=(0.0, 0.0, 0.0),
+                rotation=(0.0, 0.0, 0.0)
+            )
+        else:
+            bpy.ops.object.empty_add(
+            type = self.inputs["Type"].default_value,
+            radius = self.inputs["Radius"].default_value,
         )

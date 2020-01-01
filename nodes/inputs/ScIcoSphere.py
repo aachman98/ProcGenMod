@@ -12,14 +12,14 @@ class ScIcoSphere(Node, ScInputNode):
     in_uv: BoolProperty(default=True, update=ScNode.update_value)
     in_subdivision: IntProperty(default=2, min=1, max=10, update=ScNode.update_value)
     in_radius: FloatProperty(default=1.0, min=0.0, update=ScNode.update_value)
-    in_WorldOrigin: BoolProperty(default=False, update=ScNode.update_value)
+    
 
     def init(self, context):
         super().init(context)
         self.inputs.new("ScNodeSocketBool", "Generate UVs").init("in_uv")
         self.inputs.new("ScNodeSocketNumber", "Subdivisions").init("in_subdivision", True)
         self.inputs.new("ScNodeSocketNumber", "Radius").init("in_radius", True)
-        self.inputs.new("ScNodeSocketBool", "World Origin").init("in_WorldOrigin",True)
+        
     
     def error_condition(self):
         return (

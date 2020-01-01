@@ -17,7 +17,7 @@ class ScTorus(Node, ScInputNode):
     in_minor_radius: FloatProperty(default=0.25, min=0.01, max=100, update=ScNode.update_value)
     in_abs_major_radius: FloatProperty(default=1.25, min=0.01, max=100, update=ScNode.update_value)
     in_abs_minor_radius: FloatProperty(default=0.75, min=0.01, max=100, update=ScNode.update_value)
-    in_WorldOrigin: BoolProperty(default=False, update=ScNode.update_value)
+    
 
     def init(self, context):
         super().init(context)
@@ -29,7 +29,7 @@ class ScTorus(Node, ScInputNode):
         self.inputs.new("ScNodeSocketNumber", "Minor Radius").init("in_minor_radius", True)
         self.inputs.new("ScNodeSocketNumber", "Exterior Radius").init("in_abs_major_radius")
         self.inputs.new("ScNodeSocketNumber", "Interior Radius").init("in_abs_minor_radius")
-        self.inputs.new("ScNodeSocketBool", "World Origin").init("in_WorldOrigin",True)
+        
     
     def error_condition(self):
         return (

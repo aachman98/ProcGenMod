@@ -15,7 +15,7 @@ class ScCone(Node, ScInputNode):
     in_radius1: FloatProperty(default=1.0, min=0.0, update=ScNode.update_value)
     in_radius2: FloatProperty(min=0.0, update=ScNode.update_value)
     in_depth: FloatProperty(default=2.0, min=0.0, update=ScNode.update_value)
-    in_WorldOrigin: BoolProperty(default=False, update=ScNode.update_value)
+    
 
     def init(self, context):
         super().init(context)
@@ -25,7 +25,7 @@ class ScCone(Node, ScInputNode):
         self.inputs.new("ScNodeSocketNumber", "Radius 1").init("in_radius1", True)
         self.inputs.new("ScNodeSocketNumber", "Radius 2").init("in_radius2")
         self.inputs.new("ScNodeSocketNumber", "Depth").init("in_depth", True)
-        self.inputs.new("ScNodeSocketBool", "World Origin").init("in_WorldOrigin",True)
+        
     
     def error_condition(self):
         return (
