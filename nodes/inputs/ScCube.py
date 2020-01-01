@@ -24,7 +24,7 @@ class ScCube(Node, ScInputNode):
             super().error_condition()
             or self.inputs["Size"].default_value <= 0
         )
-    #是否是在原点创建物体,不是默认则在游标创建物体 Whether the object is created at the origin, not at the cursor by default
+    #是否是在原点创建物体,不是默认则在游标创建物体 Whether the object is created at the origin, at the cursor by default
     def functionality(self):
         if (self.inputs["World Origin"].default_value):
             bpy.ops.mesh.primitive_cube_add(
