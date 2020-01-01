@@ -17,6 +17,7 @@ class ScTorus(Node, ScInputNode):
     in_minor_radius: FloatProperty(default=0.25, min=0.01, max=100, update=ScNode.update_value)
     in_abs_major_radius: FloatProperty(default=1.25, min=0.01, max=100, update=ScNode.update_value)
     in_abs_minor_radius: FloatProperty(default=0.75, min=0.01, max=100, update=ScNode.update_value)
+    in_WorldOrigin: BoolProperty(default=False, update=ScNode.update_value)
 
     def init(self, context):
         super().init(context)
@@ -28,6 +29,7 @@ class ScTorus(Node, ScInputNode):
         self.inputs.new("ScNodeSocketNumber", "Minor Radius").init("in_minor_radius", True)
         self.inputs.new("ScNodeSocketNumber", "Exterior Radius").init("in_abs_major_radius")
         self.inputs.new("ScNodeSocketNumber", "Interior Radius").init("in_abs_minor_radius")
+        self.inputs.new("ScNodeSocketBool", "World Origin").init("in_WorldOrigin",True)
     
     def error_condition(self):
         return (
@@ -42,13 +44,28 @@ class ScTorus(Node, ScInputNode):
         )
     
     def functionality(self):
-        bpy.ops.mesh.primitive_torus_add(
-            major_segments = int(self.inputs["Major Segments"].default_value),
-            minor_segments = int(self.inputs["Minor Segments"].default_value),
-            mode = self.inputs["Torus Dimensions"].default_value,
-            major_radius = self.inputs["Major Radius"].default_value,
-            minor_radius = self.inputs["Minor Radius"].default_value,
-            abso_major_rad = self.inputs["Exterior Radius"].default_value,
-            abso_minor_rad = self.inputs["Interior Radius"].default_value,
-            generate_uvs = self.inputs["Generate UVs"].default_value
-        )
+        if (self.inputs["World Origin"].default_value):
+            bpy.ops.mesh.primitive_torus_add(
+                major_segments = int(self.inputs["Major Segments"].default_value),
+                minor_segments = int(self.inputs["Minor Segments"].default_value),
+                mode = self.inputs["Torus Dimensions"].default_value,
+                major_radius = self.inputs["Major Radius"].default_value,
+                minor_radius = self.inputs["Minor Radius"].default_value,
+                abso_major_rad = self.inputs["Exterior Radius"].default_value,
+                abso_minor_rad = self.inputs["Interior Radius"].default_value,
+                generate_uvs = self.inputs["Generate UVs"].default_value,
+                align='WORLD',
+                location=(0.0, 0.0, 0.0),
+                rotation=(0.0, 0.0, 0.0)
+            )
+        else:
+            bpy.ops.mesh.primitive_torus_add(
+                major_segments = int(self.inputs["Major Segments"].default_value),
+                minor_segments = int(self.inputs["Minor Segments"].default_value),
+                mode = self.inputs["Torus Dimensions"].default_value,
+                major_radius = self.inputs["Major Radius"].default_value,
+                minor_radius = self.inputs["Minor Radius"].default_value,
+                abso_major_rad = self.inputs["Exterior Radius"].default_value,
+                abso_minor_rad = self.inputs["Interior Radius"].default_value,
+                generate_uvs = self.inputs["Generate UVs"].default_value
+            )
