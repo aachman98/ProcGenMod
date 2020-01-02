@@ -13,7 +13,6 @@ class ScGrid(Node, ScInputNode):
     in_x: IntProperty(default=10, min=2, max=10000000, update=ScNode.update_value)
     in_y: IntProperty(default=10, min=2, max=10000000, update=ScNode.update_value)
     in_size: FloatProperty(default=2.0, min=0.0, update=ScNode.update_value)
-    
 
     def init(self, context):
         super().init(context)
@@ -21,7 +20,6 @@ class ScGrid(Node, ScInputNode):
         self.inputs.new("ScNodeSocketNumber", "X Subdivisions").init("in_x", True)
         self.inputs.new("ScNodeSocketNumber", "Y Subdivisions").init("in_y", True)
         self.inputs.new("ScNodeSocketNumber", "Size").init("in_size", True)
-        
     
     def error_condition(self):
         return (
@@ -32,20 +30,9 @@ class ScGrid(Node, ScInputNode):
         )
     
     def functionality(self):
-        if (self.inputs["World Origin"].default_value):
-            bpy.ops.mesh.primitive_grid_add(
-                x_subdivisions = int(self.inputs["X Subdivisions"].default_value),
-                y_subdivisions = int(self.inputs["Y Subdivisions"].default_value),
-                size = self.inputs["Size"].default_value,
-                calc_uvs = self.inputs["Generate UVs"].default_value,
-                align='WORLD',
-                location=(0.0, 0.0, 0.0),
-                rotation=(0.0, 0.0, 0.0)
-            )
-        else:
-            bpy.ops.mesh.primitive_grid_add(
-                x_subdivisions = int(self.inputs["X Subdivisions"].default_value),
-                y_subdivisions = int(self.inputs["Y Subdivisions"].default_value),
-                size = self.inputs["Size"].default_value,
-                calc_uvs = self.inputs["Generate UVs"].default_value
-            )
+        bpy.ops.mesh.primitive_grid_add(
+            x_subdivisions = int(self.inputs["X Subdivisions"].default_value),
+            y_subdivisions = int(self.inputs["Y Subdivisions"].default_value),
+            size = self.inputs["Size"].default_value,
+            calc_uvs = self.inputs["Generate UVs"].default_value
+        )

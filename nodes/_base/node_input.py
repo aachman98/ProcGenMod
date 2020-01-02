@@ -2,7 +2,7 @@ import bpy
 
 from bpy.props import PointerProperty, StringProperty, BoolProperty
 from .._base.node_base import ScNode
-from ...helper import focus_on_object, remove_object
+from ...helper import focus_on_object, remove_object, world_center
 
 class ScInputNode(ScNode):
     in_name: StringProperty(default="Object", update=ScNode.update_value)
@@ -27,6 +27,8 @@ class ScInputNode(ScNode):
         focus_on_object(self.out_mesh)
         remove_object(self.out_mesh)
 
+
+
     
     def post_execute(self):
         out = {}
@@ -35,4 +37,6 @@ class ScInputNode(ScNode):
         if (self.out_mesh.data):
             self.out_mesh.data.name = self.out_mesh.name
         out["Object"] = self.out_mesh
+        if (self.inputs["World Origin"].default_value):
+            world_center(self.out_mesh)
         return out

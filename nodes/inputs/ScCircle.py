@@ -13,7 +13,6 @@ class ScCircle(Node, ScInputNode):
     in_type: EnumProperty(items=[("NOTHING", "Nothing", ""), ("NGON", "Ngon", ""), ("TRIFAN", "Triangle Fan", "")], default="NOTHING", update=ScNode.update_value)
     in_vertices: IntProperty(default=32, min=3, max=10000000, update=ScNode.update_value)
     in_radius: FloatProperty(default=1.0, min=0.0, update=ScNode.update_value)
-    
 
     def init(self, context):
         super().init(context)
@@ -21,7 +20,6 @@ class ScCircle(Node, ScInputNode):
         self.inputs.new("ScNodeSocketString", "Fill Type").init("in_type")
         self.inputs.new("ScNodeSocketNumber", "Vertices").init("in_vertices", True)
         self.inputs.new("ScNodeSocketNumber", "Radius").init("in_radius", True)
-        
     
     def error_condition(self):
         return (
@@ -32,20 +30,9 @@ class ScCircle(Node, ScInputNode):
         )
     
     def functionality(self):
-        if (self.inputs["World Origin"].default_value):
-            bpy.ops.mesh.primitive_circle_add(
-                vertices = int(self.inputs["Vertices"].default_value),
-                radius = self.inputs["Radius"].default_value,
-                fill_type = self.inputs["Fill Type"].default_value,
-                calc_uvs = self.inputs["Generate UVs"].default_value,
-                align='WORLD',
-                location=(0.0, 0.0, 0.0),
-                rotation=(0.0, 0.0, 0.0)
-            )
-        else:
-            bpy.ops.mesh.primitive_circle_add(
-                vertices = int(self.inputs["Vertices"].default_value),
-                radius = self.inputs["Radius"].default_value,
-                fill_type = self.inputs["Fill Type"].default_value,
-                calc_uvs = self.inputs["Generate UVs"].default_value
-            )
+        bpy.ops.mesh.primitive_circle_add(
+            vertices = int(self.inputs["Vertices"].default_value),
+            radius = self.inputs["Radius"].default_value,
+            fill_type = self.inputs["Fill Type"].default_value,
+            calc_uvs = self.inputs["Generate UVs"].default_value
+        )

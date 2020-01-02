@@ -13,7 +13,6 @@ class ScUvSphere(Node, ScInputNode):
     in_segment: IntProperty(default=32, min=3, max=10000000, update=ScNode.update_value)
     in_ring: IntProperty(default=16, min=3, max=10000000, update=ScNode.update_value)
     in_radius: FloatProperty(default=1.0, min=0.0, update=ScNode.update_value)
-    
 
     def init(self, context):
         super().init(context)
@@ -21,7 +20,6 @@ class ScUvSphere(Node, ScInputNode):
         self.inputs.new("ScNodeSocketNumber", "Segments").init("in_segment", True)
         self.inputs.new("ScNodeSocketNumber", "Rings").init("in_ring", True)
         self.inputs.new("ScNodeSocketNumber", "Radius").init("in_radius", True)
-        
     
     def error_condition(self):
         return (
@@ -32,20 +30,9 @@ class ScUvSphere(Node, ScInputNode):
         )
     
     def functionality(self):
-        if (self.inputs["World Origin"].default_value):
-            bpy.ops.mesh.primitive_uv_sphere_add(
-                segments = int(self.inputs["Segments"].default_value),
-                ring_count = int(self.inputs["Rings"].default_value),
-                radius = self.inputs["Radius"].default_value,
-                calc_uvs = self.inputs["Generate UVs"].default_value,
-                align='WORLD',
-                location=(0.0, 0.0, 0.0),
-                rotation=(0.0, 0.0, 0.0)
-            )
-        else:
-            bpy.ops.mesh.primitive_uv_sphere_add(
-                segments = int(self.inputs["Segments"].default_value),
-                ring_count = int(self.inputs["Rings"].default_value),
-                radius = self.inputs["Radius"].default_value,
-                calc_uvs = self.inputs["Generate UVs"].default_value
-            )
+        bpy.ops.mesh.primitive_uv_sphere_add(
+            segments = int(self.inputs["Segments"].default_value),
+            ring_count = int(self.inputs["Rings"].default_value),
+            radius = self.inputs["Radius"].default_value,
+            calc_uvs = self.inputs["Generate UVs"].default_value
+        )

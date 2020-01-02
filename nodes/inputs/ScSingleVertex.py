@@ -19,10 +19,7 @@ class ScSingleVertex(Node, ScInputNode):
     def functionality(self):
         m = bpy.data.meshes.new(self.inputs["Name"].default_value)
         obj = bpy.data.objects.new(self.inputs["Name"].default_value, m)
-        if (self.inputs["World Origin"].default_value):
-            obj.location = (0,0,0)
-        else:
-            obj.location = bpy.context.scene.cursor.location
+        obj.location = bpy.context.scene.cursor.location
         m.vertices.add(1)
         m.update()
         obj.show_name = self.inputs["Show Name"].default_value
