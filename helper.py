@@ -1,3 +1,4 @@
+import re
 import bpy
 from mathutils import Vector
 
@@ -189,3 +190,19 @@ def selection_type_to_string(sel_type):
         out.append("Face")
 
     return " + ".join(out)
+
+re_trailing_number = re.compile(r'\.(\d{3})$')
+def strip_trailing_number(s):
+    """ Strip trailing number such as ".001". """
+    m = re_trailing_number.match(s)
+    return s[0:-4] if m else s
+
+def unique_name(base_name):
+    """ Generate unique object name in `bpy.data.objects`. """
+    base_name = strip_trailing_number(base_name)
+    count = 1
+    name = base_name
+    while bpy.data.objects.get(name):
+        name = "%s.%03d" % (base_name, count)
+        count += 1
+    return name
