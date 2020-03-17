@@ -196,4 +196,4 @@ def world_center(obj):
             bpy.context.view_layer.objects.active = obj
             obj.select_set(True)
             bpy.ops.object.location_clear(clear_delta=False)
- 
+            bpy.context.object.location
