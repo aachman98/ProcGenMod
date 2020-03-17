@@ -195,17 +195,5 @@ def world_center(obj):
         if (obj.name in bpy.context.view_layer.objects):
             bpy.context.view_layer.objects.active = obj
             obj.select_set(True)
-            #bpy.ops.object.origin_set(type='ORIGIN_CENTER_OF_VOLUME') #set origin to volume centroid
-            #bpy.context.view_layer.objects.active.location #check origin location if needed for any purpose
-            #obj.location = bpy.ops.object.location_clear(clear_delta=False)#translate origin to global (0,0,0)
-            #bpy.ops.object.location_clear(clear_delta=False)
             bpy.ops.object.location_clear(clear_delta=False)
-            #bpy.ops.object = bpy.context.view_layer.objects.active
-            #obj.location_clear(clear_delta=False)#translate origin to global (0,0,0)
-            bpy.context.object.location #double check it worked
-            #obj.transform.resize(value=(0, 0, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
-            #obj.location = bpy.ops.transform.resize(value=(0, 0, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
-            
-
-
-
+ 
