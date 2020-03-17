@@ -6,9 +6,9 @@ from .._base.node_base import ScNode
 from .._base.node_transform import ScTransformNode
 from ...helper import get_override
 
-class ScTransform(Node, ScTransformNode):
-    bl_idname = "ScTransform"
-    bl_label = "Transform"
+class ScLocalTransform(Node, ScTransformNode):
+    bl_idname = "ScLocalTransform"
+    bl_label = "Local Transform"
 
     in_mode: EnumProperty(items=[('TRANSLATION', 'Translate', ''), ('ROTATION', 'Rotate', ''), ('RESIZE', 'Scale', ''), ('SHEAR', 'Shear', ''), ('BEND', 'Bend', ''), ('SHRINKFATTEN', 'Shrink-Fatten', ''), ('TILT', 'Tilt', ''), ('PUSHPULL', 'Push-Pull', ''), ('SKIN_RESIZE', 'Skin Resize', ''), ('CREASE', 'Crease', ''), ('MIRROR', 'Mirror', ''), ('ALIGN', 'Align', ''), ('EDGESLIDE', 'Edge Slide', '')], update=ScNode.update_value)
     in_x: FloatProperty(update=ScNode.update_value)
@@ -33,6 +33,7 @@ class ScTransform(Node, ScTransformNode):
             super().error_condition()
             or (not self.inputs["Mode"].default_value in ['TRANSLATION', 'ROTATION', 'RESIZE', 'SHEAR', 'BEND', 'SHRINKFATTEN', 'TILT', 'PUSHPULL', 'SKIN_RESIZE', 'CREASE', 'MIRROR', 'ALIGN', 'EDGESLIDE'])
             or (not self.inputs["Axis"].default_value in ['X', 'Y', 'Z'])
+            or (self.inputs["Mode"].default_value in ['CREASE', 'SKIN_RESIZE', 'EDGESLIDE'] and not self.inputs["Edit Mode"].default_value)
         )
     
     def functionality(self):
@@ -43,12 +44,14 @@ class ScTransform(Node, ScTransformNode):
             orient_axis = self.inputs["Axis"].default_value,
             orient_type = bpy.context.scene.transform_orientation_slots[0].type,
             mirror = self.inputs["Mirror"].default_value,
-            # use_proportional_edit = bpy.context.scene.tool_settings.use_proportional_edit,
-            # proportional_edit_falloff = bpy.context.scene.tool_settings.proportional_edit_falloff,
-            # proportional_size = bpy.context.scene.tool_settings.proportional_size,
-            # use_proportional_connected = bpy.context.scene.tool_settings.use_proportional_connected,
+            use_proportional_edit = bpy.context.scene.tool_settings.use_proportional_edit,
+            proportional_edit_falloff = bpy.context.scene.tool_settings.proportional_edit_falloff,
+            proportional_size = bpy.context.scene.tool_settings.proportional_size,
+            use_proportional_connected = bpy.context.scene.tool_settings.use_proportional_connected,
             # use_proportional_projected = bpy.context.scene.tool_settings.use_proportional_projected,
-            # snap = bpy.context.scene.tool_settings.use_snap,
-            # snap_target = bpy.context.scene.tool_settings.snap_target,
-            # snap_align = bpy.context.scene.tool_settings.use_snap_align_rotation
+            snap = bpy.context.scene.tool_settings.use_snap,
+            snap_target = bpy.context.scene.tool_settings.snap_target,
+            # snap_point = (0, 0, 0),
+            snap_align = bpy.context.scene.tool_settings.use_snap_align_rotation,
+            # snap_normal = bpy.context.scene.tool_settings.use_snap_align_rotation,
         )

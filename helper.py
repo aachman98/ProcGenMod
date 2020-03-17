@@ -229,3 +229,4 @@ def world_center(obj):
             obj.select_set(True)
             bpy.ops.object.location_clear(clear_delta=False)
             bpy.context.object.location
+

@@ -15,7 +15,7 @@ Sorcar is a **procedural modeling node-based system** which utilises Blender and
 
 ## Release & Instructions
 
-[Latest Release (v3.1.4)](https://github.com/aachman98/Sorcar/releases/latest)
+[Latest Release (v3.1.5)](https://github.com/aachman98/Sorcar/releases/latest)
 </br>*Requirement: Blender 2.80 or later*
 
 1. Download the zip file and install it as a Blender addon (Edit -> Preferences... -> Add-ons-> Install...)
@@ -47,25 +47,25 @@ and more...!
 
 | | |
 | --- | --- |
-| ![sc_inputs](https://github.com/aachman98/sc-img-data/raw/master/sc_inputs.png "Inputs") | **Inputs** </br> Primitive Meshes (Cube, Cylinder, Sphere, ...), Import FBX, Custom Object from the scene |
-| ![sc_transform](https://github.com/aachman98/sc-img-data/raw/master/sc_transform.png "Transform") | **Transform** </br> Set/Add/Randomize transform (Edit/Object mode), Apply transform, Create custom orientation|
+| ![sc_inputs](https://github.com/aachman98/sc-img-data/raw/master/sc_inputs.png "Inputs") | **Inputs** </br> Primitive Meshes (Cube, Cylinder, Sphere, ...), Empty Object, Import FBX, Custom Object from the scene, Create Object using arrays of Vertices, Edges & Faces  |
+| ![sc_transform](https://github.com/aachman98/sc-img-data/raw/master/sc_transform.png "Transform") | **Transform** </br> Set/Add/Randomize transform (Edit/Object mode), Apply/Copy transform in world/local axes, Create custom orientation|
 | ![sc_selection](https://github.com/aachman98/sc-img-data/raw/master/sc_selection.png "Selection") | **Selection** </br> Manual, invert/toggle, loops, random, similar components or by their property (location, index, normal, material, ...) |
 | ![sc_deletion](https://github.com/aachman98/sc-img-data/raw/master/sc_deletion.png "Deletion") | **Deletion** </br> Delete/Dissolve selected components (or loops) |
 | | |
-| ![sc_component_operators](https://github.com/aachman98/sc-img-data/raw/master/sc_component_operators.png "Component Operators") | **Component Operators** </br> Bevel, Decimate, Extrude, Fill, Inset, Loop Cut, Merge, Offset Loop, Poke, Screw, Spin, Subdivide, UV Map |
-| ![sc_object_operators](https://github.com/aachman98/sc-img-data/raw/master/sc_object_operators.png "Object Operators") | **Object Operators** </br> Duplicate, Raycast/Overlap, Merge, Scatter, Shading, Viewport Draw Mode |
-| ![sc_modifiers](https://github.com/aachman98/sc-img-data/raw/master/sc_modifiers.png "Modifiers") | **Modifiers** </br> Array, Bevel, Boolean, Build, Cast, Curve, Decimate, Remesh, Skin, Solidify, Subsurf, Wave, Wireframe |
+| ![sc_component_operators](https://github.com/aachman98/sc-img-data/raw/master/sc_component_operators.png "Component Operators") | **Component Operators** </br> Bevel, Decimate, Extrude, Fill, Inset, Loop Cut, Merge, Offset Loop, Poke, Screw, Spin, Subdivide, UV Map, Assign material or vertex groups |
+| ![sc_object_operators](https://github.com/aachman98/sc-img-data/raw/master/sc_object_operators.png "Object Operators") | **Object Operators** </br> Duplicate, Raycast/Overlap, Merge, Scatter, Parent (& Get Children), Voxel/QuadriFlow Remesh, Shading, Viewport Draw Mode |
+| ![sc_modifiers](https://github.com/aachman98/sc-img-data/raw/master/sc_modifiers.png "Modifiers") | **Modifiers** </br> Array, Bevel, Boolean, Build, Cast, Curve, Decimate, Remesh, Shrinkwrap, Skin, Solidify, Subsurf, Wave, Weighted Normal, Wireframe |
 | | |
-| ![sc_constants](https://github.com/aachman98/sc-img-data/raw/master/sc_constants.png "Constants") | **Constants** </br> Number (Float/Int/Angle/Random), Bool, Vector, String |
-| ![sc_utilities](https://github.com/aachman98/sc-img-data/raw/master/sc_utilities.png "Utilities") | **Utilities** </br> Array, String/Bool/Vector ops, Maths, Clamp, Map, Trigonometry, Scene/Component/Object Info, Custom Python Script |
-| ![sc_flow_control](https://github.com/aachman98/sc-img-data/raw/master/sc_flow_control.png "Flow Control") | **Flow Control** </br> For loop, For-Each loop, If-Else Branch |
-| ![sc_settings](https://github.com/aachman98/sc-img-data/raw/master/sc_settings.png "Settings") | **Settings** </br> Cursor Transform, Edit Mode, Pivot Point, Transform Orientation |
+| ![sc_constants](https://github.com/aachman98/sc-img-data/raw/master/sc_constants.png "Constants") | **Constants** </br> Number (Float/Int/Angle/Random), Bool, Vector, String, Selection Type (Face/Vert/Edge) |
+| ![sc_utilities](https://github.com/aachman98/sc-img-data/raw/master/sc_utilities.png "Utilities") | **Utilities** </br> Array, String/Bool/Vector ops, Maths, Clamp, Map, Trigonometry, Get/Set Variables, Scene/Component/Object Info, Custom Python Script |
+| ![sc_flow_control](https://github.com/aachman98/sc-img-data/raw/master/sc_flow_control.png "Flow Control") | **Flow Control** </br> For loop, For-Each loop (Array/Components), If-Else Branch |
+| ![sc_settings](https://github.com/aachman98/sc-img-data/raw/master/sc_settings.png "Settings") | **Settings** </br> Cursor Transform, Edit Mode, Pivot Point, Snapping, Proportional Editing, Transform Orientation |
 
 ## Upcoming Feature
 
 1. Improve loop nodes: Add more options to control in each pass
-2. Curve nodes: Edit spline properties, convert to mesh
-3. Named variables: Get/set values of custom variables, accessible across node trees
+2. Curve nodes: Edit spline properties
+3. Object constraint nodes
 
 ## Future
 
@@ -80,6 +80,31 @@ and more...!
 ![sc_showcase](https://github.com/aachman98/sc-img-data/raw/master/sc_showcase.png "Made in Sorcar")
 
 ## Changelog
+
+#### v3.1.5
+
+- Added keymap support to quickly execute selected node (Key: 'E')
+- Added new "Curve" category & socket to handle objects with curve data
+- Added method for modifying node parameter externally (automatically re-evaluates nodetree)
+- Added "Import SVG" & "Text" curve input nodes
+- Added "Convert to Mesh" & "Convert to Curve" nodes
+- Added "Create Object" input node
+- Added "QuadriFlow Remesh" object operator node
+- Added "Warp" & "Randomize Vertices" transform nodes
+- Added Weld, Lattice, Shrinkwrap & Weighted Normal modifier nodes
+- Added "Proportional Editing" & "Snap" settings node
+- Added "Clear Parent", "Get Parent", & "Get Children" object operator nodes
+- Improved "Scatter" node to support instanced scattering
+- Improved "Maths Operation" node to include more operations & better menu layout
+- Improved "Parent" node to include option to set the inverse parent correction
+- Improved "Skin Modifier" node to allow skin resize for selected vertices
+- Renamed transform nodes to "World/Local Transform"
+- Fixed issue with Crease, Edge-Slide, Skin-Resize local transform
+- Fixed custom object/curve nodes to hide original object
+- Fixed issue with rerouting socket connections
+- Fixed transform nodes to use snapping & proportional editing settings
+- Fixed object deletion helper method to remove orphaned data
+- Fixed "Select Nth" node parameter minimum value
 
 #### v3.1.4
 
@@ -130,8 +155,10 @@ and more...!
 
 ## Contributors
 
+- [@tomoaki-e33](https://github.com/tomoaki-e33) (Tomoaki Nakano) - Active Developer ([#107](https://github.com/aachman98/Sorcar/pull/107), [#110](https://github.com/aachman98/Sorcar/pull/110), [#111](https://github.com/aachman98/Sorcar/pull/111))
+- [@devilvalley](https://github.com/devilvalley) (袁腾鹏) - Bug fix in "Select Nth" selection node ([#106](https://github.com/aachman98/Sorcar/pull/106))
 - [@CORPSE-SYS](https://github.com/CORPSE-SYS) - Active Developer ([#83](https://github.com/aachman98/Sorcar/pull/83), [#96](https://github.com/aachman98/Sorcar/pull/96))
-- [@zebus3d](https://github.com/zebus3d) - Active Developer ([#88](https://github.com/aachman98/Sorcar/pull/88), [#90](https://github.com/aachman98/Sorcar/pull/90))
+- [@zebus3d](https://github.com/zebus3d) - Active Developer ([#88](https://github.com/aachman98/Sorcar/pull/88), [#90](https://github.com/aachman98/Sorcar/pull/90), [#104](https://github.com/aachman98/Sorcar/pull/104))
 - [@CGCookie](https://github.com/CGCookie) (CG Cookie) - Addon updater ([Github](https://github.com/CGCookie/blender-addon-updater))
 - [@8176135](https://github.com/8176135) - Individual edit mode type in selection nodes using a new socket ([#80](https://github.com/aachman98/Sorcar/pull/80))
 - [@huiyao8761380](https://github.com/huiyao8761380) (TangHui) - Documentation Maintainer

@@ -7,7 +7,6 @@ from ...helper import focus_on_object, remove_object, world_center
 class ScInputNode(ScNode):
     in_name: StringProperty(default="Object", update=ScNode.update_value)
     in_world_origin: BoolProperty(default=False, update=ScNode.update_value)
-    # in_uv: BoolProperty(default=True, update=ScNode.update_value)
     out_mesh: PointerProperty(type=bpy.types.Object)
 
     def init(self, context):
@@ -15,7 +14,6 @@ class ScInputNode(ScNode):
         super().init(context)
         self.inputs.new("ScNodeSocketString", "Name").init("in_name")
         self.inputs.new("ScNodeSocketBool", "World Origin").init("in_world_origin",False)
-        # self.inputs.new("ScNodeSocketBool", "Generate UVs").init("in_uv")
         self.outputs.new("ScNodeSocketObject", "Object")
     
     def error_condition(self):
