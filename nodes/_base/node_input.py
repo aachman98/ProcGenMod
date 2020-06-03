@@ -2,16 +2,18 @@ import bpy
 
 from bpy.props import PointerProperty, StringProperty, BoolProperty
 from .._base.node_base import ScNode
-from ...helper import focus_on_object, remove_object
+from ...helper import focus_on_object, remove_object, world_center
 
 class ScInputNode(ScNode):
     in_name: StringProperty(default="Object", update=ScNode.update_value)
+    in_world_origin: BoolProperty(default=False, update=ScNode.update_value)
     out_mesh: PointerProperty(type=bpy.types.Object)
 
     def init(self, context):
         self.node_executable = True
         super().init(context)
         self.inputs.new("ScNodeSocketString", "Name").init("in_name")
+        self.inputs.new("ScNodeSocketBool", "World Origin").init("in_world_origin",False)
         self.outputs.new("ScNodeSocketObject", "Object")
     
     def error_condition(self):
@@ -30,4 +32,6 @@ class ScInputNode(ScNode):
         if (self.out_mesh.data):
             self.out_mesh.data.name = self.out_mesh.name
         out["Object"] = self.out_mesh
+        if (self.inputs["World Origin"].default_value):
+            world_center(self.out_mesh)
         return out
