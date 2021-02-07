@@ -38,15 +38,27 @@ class ScSelectByNormal(Node, ScSelectionNode):
             bpy.ops.object.mode_set(mode="OBJECT")
 
         if (bpy.context.tool_settings.mesh_select_mode[0]):
+            for edge in self.inputs["Object"].default_value.data.edges:
+                edge.select = False
+            for face in self.inputs["Object"].default_value.data.polygons:
+                face.select = False
             for vertex in self.inputs["Object"].default_value.data.vertices:
                 if (((vertex.normal[0]>=self.inputs["Minimum"].default_value[0] and vertex.normal[1]>=self.inputs["Minimum"].default_value[1] and vertex.normal[2]>=self.inputs["Minimum"].default_value[2]) and (vertex.normal[0]<=self.inputs["Maximum"].default_value[0] and vertex.normal[1]<=self.inputs["Maximum"].default_value[1] and vertex.normal[2]<=self.inputs["Maximum"].default_value[2]))):
                     vertex.select = not self.inputs["Deselect"].default_value
         if (bpy.context.tool_settings.mesh_select_mode[1]):
+            for vertex in self.inputs["Object"].default_value.data.vertices:
+                vertex.select = False
+            for face in self.inputs["Object"].default_value.data.polygons:
+                face.select = False
             for edge in self.inputs["Object"].default_value.data.edges:
                 normal = (self.inputs["Object"].default_value.data.vertices[edge.vertices[0]].normal + self.inputs["Object"].default_value.data.vertices[edge.vertices[1]].normal)/2
                 if (((normal[0]>=self.inputs["Minimum"].default_value[0] and normal[1]>=self.inputs["Minimum"].default_value[1] and normal[2]>=self.inputs["Minimum"].default_value[2]) and (normal[0]<=self.inputs["Maximum"].default_value[0] and normal[1]<=self.inputs["Maximum"].default_value[1] and normal[2]<=self.inputs["Maximum"].default_value[2]))):
                     edge.select = not self.inputs["Deselect"].default_value
         if (bpy.context.tool_settings.mesh_select_mode[2]):
+            for vertex in self.inputs["Object"].default_value.data.vertices:
+                vertex.select = False
+            for edge in self.inputs["Object"].default_value.data.edges:
+                edge.select = False
             for face in self.inputs["Object"].default_value.data.polygons:
                 if (((face.normal[0]>=self.inputs["Minimum"].default_value[0] and face.normal[1]>=self.inputs["Minimum"].default_value[1] and face.normal[2]>=self.inputs["Minimum"].default_value[2]) and (face.normal[0]<=self.inputs["Maximum"].default_value[0] and face.normal[1]<=self.inputs["Maximum"].default_value[1] and face.normal[2]<=self.inputs["Maximum"].default_value[2]))):
                     face.select = not self.inputs["Deselect"].default_value
