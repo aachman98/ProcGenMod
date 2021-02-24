@@ -96,7 +96,7 @@ class ScScatter(Node, ScObjectOperatorNode):
                 self.prop_obj_array = repr(temp)
                 self.id_data.register_object(bpy.context.active_object)
                 if (self.inputs["Type"].default_value == 'RAND'):
-                    self.inputs["Scatter Object"].execute(True)
+                    self.inputs["Scatter Object"].execute(self.get_scope_context(), True)
     
     def post_execute(self):
         out = super().post_execute()

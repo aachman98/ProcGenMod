@@ -1,12 +1,17 @@
 import bpy
 
-from bpy.props import BoolProperty
+from bpy.props import BoolProperty, IntProperty
 from ...helper import print_log
 
 class ScNode:
     node_executable: BoolProperty()
     first_time: BoolProperty()
     node_error: BoolProperty()
+    scope_context_id: IntProperty()
+
+    # This will hold all contexts for all ScNode instances, using hash(self) as an index.
+    # This is a workaround to store ephemeral data, without using Property data.
+    scope_contexts = {}
 
     @classmethod
     def poll(cls, _ntree):
@@ -23,6 +28,7 @@ class ScNode:
         # Reset node for next execution
         if (execute):
             self.first_time = True
+            self.scope_context_id = -1
         self.set_color()
     
     def set_color(self):
@@ -39,16 +45,48 @@ class ScNode:
         # Initialise node with data
         self.use_custom_color = True
         self.set_color()
-    
+
+    def get_scope_context(self):
+        return self.scope_contexts[hash(self)]
+
+    def set_scope_context(self, context):
+        self.scope_contexts[hash(self)] = context
+
+    def get_scope_context_id(self):
+        self_hash = hash(self)
+        if self_hash in self.scope_contexts:
+            context = self.scope_contexts[self_hash]
+            return context['id']
+        return -1
+
+    def restore_scope_context_id(self, id):
+        self_hash = hash(self)
+        if self_hash in self.scope_contexts:
+            context = self.scope_contexts[self_hash]
+            context['id'] = id
+        
+    def increment_scope_context_id(self):
+        self_hash = hash(self)
+        if self_hash in self.scope_contexts:
+            context = self.scope_contexts[self_hash]
+            context['id'] += 1
+
     def draw_buttons(self, context, layout):
         if (self.node_executable):
             if (self == context.space_data.edit_tree.nodes.active):
                 if (not self == context.space_data.edit_tree.nodes.get(str(context.space_data.edit_tree.node))):
                     layout.operator("sorcar.execute_node", text="Set Preview")
     
-    def execute(self, forced=False):
+    def execute(self, scope_context, forced=False):
         # Execute node
-        if (self.first_time or forced):
+
+        # Keep track of the last scope context we executed in. This will be used
+        # to only execute once inside each loop iteration.
+        self.set_scope_context(scope_context)
+        id_changed = self.scope_context_id != scope_context['id']
+        self.scope_context_id = scope_context['id']
+
+        if (self.first_time or forced or id_changed):
             self.node_error = True
             if (self.init_in(forced)):
                 if not (self.error_condition()):
@@ -61,7 +99,7 @@ class ScNode:
     
     def init_in(self, forced):
         for i in self.inputs:
-            if (not i.execute(forced)):
+            if (not i.execute(self.get_scope_context(), forced)):
                 return False
         return True
     

@@ -20,11 +20,13 @@ class ScEndForEachComponentLoop(Node, ScNode):
     def init_in(self, forced):
         return (
             self.inputs["Begin For-Each Component Loop"].is_linked
-            and self.inputs["Begin For-Each Component Loop"].links[0].from_node.execute(forced)
+            and self.inputs["Begin For-Each Component Loop"].links[0].from_node.execute(self.get_scope_context(), forced)
         )
     
-    def functionality(self):
+    def functionality(self):        
+        context_id = self.get_scope_context_id()        
         for i in eval(self.inputs["Begin For-Each Component Loop"].links[0].from_node.prop_components):
+            self.increment_scope_context_id()
             self.inputs["Begin For-Each Component Loop"].links[0].from_node.out_index = i
             bpy.ops.object.mode_set(mode="EDIT")
             bpy.ops.mesh.select_all(action="DESELECT")
@@ -36,7 +38,8 @@ class ScEndForEachComponentLoop(Node, ScNode):
             elif (self.inputs["Begin For-Each Component Loop"].links[0].from_node.inputs["Type"].default_value == 'FACE'):
                 self.inputs["Begin For-Each Component Loop"].links[0].from_node.outputs["Out"].default_value.data.polygons[i].select = True
             bpy.ops.object.mode_set(mode="EDIT")
-            self.inputs["In"].execute(True)
+            self.inputs["In"].execute(self.get_scope_context(), False)
+        self.restore_scope_context_id(context_id)
         self.inputs["Begin For-Each Component Loop"].links[0].from_node.prop_locked = False
     
     def post_execute(self):

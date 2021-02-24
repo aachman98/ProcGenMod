@@ -1,4 +1,5 @@
 import bpy
+import sys
 from mathutils import Vector
 
 def sc_poll_op(context):
@@ -31,12 +32,19 @@ def focus_on_object(obj, edit=False):
             if (edit):
                 bpy.ops.object.mode_set(mode="EDIT")
 
-def remove_object(obj):
+def remove_object_recursive(obj, hierarchy=False):
     if (obj):
+        print_log("Removing:", msg=repr(obj))
+
+        if hierarchy:
+            for child in obj.children:
+                remove_object_recursive(child, True)
         try:
             data = obj.data
             type = obj.type
         except:
+            e = sys.exc_info()[0]
+            print_log("Exception during remove: %s" % (e,))
             return
         bpy.data.objects.remove(obj, do_unlink=True, do_id_user=True)
         if hasattr(data, "users"):
@@ -45,6 +53,9 @@ def remove_object(obj):
                     bpy.data.meshes.remove(data, do_unlink=True, do_id_user=True)
                 elif (type in ['CURVE', 'FONT']):
                     bpy.data.curves.remove(data, do_unlink=True, do_id_user=True)
+
+def remove_object(obj, hierarchy=False):
+    remove_object_recursive(obj, hierarchy)
 
 def apply_all_modifiers(object):
     if (object):

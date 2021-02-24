@@ -20,7 +20,7 @@ class ScBeginForEachLoop(Node, ScNode):
         self.outputs.new("ScNodeSocketUniversal", "Element")
         self.outputs.new("ScNodeSocketNumber", "Index")
     
-    def execute(self, forced=False):
+    def execute(self, scope_context, forced=False):
         if (self.prop_locked):
             self.outputs["Element"].default_value = self.out_element
             self.outputs["Index"].default_value = self.out_index
@@ -29,7 +29,7 @@ class ScBeginForEachLoop(Node, ScNode):
         else:
             self.prop_locked = True
             self.out_index = 0
-            return super().execute(forced)
+            return super().execute(scope_context, forced)
     
     def post_execute(self):
         out = {}

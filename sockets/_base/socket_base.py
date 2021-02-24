@@ -57,12 +57,12 @@ class ScNodeSocket:
                     layout.prop(self, "hide", icon='RADIOBUT_OFF', icon_only=True, invert_checkbox=True)
                     self.draw_layout(context, layout, node, self.default_prop, text)
     
-    def execute(self, forced):
+    def execute(self, scope_context, forced):
         # Execute node socket to get/set default_value
         if (self.is_output):
             if (self.node.type == "GROUP_INPUT"):
                 return True
-            return self.node.execute(forced)
+            return self.node.execute(scope_context, forced)
         else:
             self.socket_error = True
             # if (len(self.links) > 0):
@@ -75,7 +75,7 @@ class ScNodeSocket:
                         break
                     from_socket = from_node.inputs[0].links[0].from_socket
                     from_node = from_node.inputs[0].links[0].from_node
-                if (from_socket and from_socket.execute(forced)):
+                if (from_socket and from_socket.execute(scope_context, forced)):
                     ret, data = from_socket.get_data(self.default_type)
                     if(ret):
                         self.socket_error = False

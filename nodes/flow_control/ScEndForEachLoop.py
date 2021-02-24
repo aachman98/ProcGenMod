@@ -21,8 +21,8 @@ class ScEndForEachLoop(Node, ScNode):
     def init_in(self, forced):
         return (
             self.inputs["Begin For-Each Loop"].is_linked
-            and self.inputs["Begin For-Each Loop"].links[0].from_node.execute(forced)
-            and self.inputs["Array"].execute(forced)
+            and self.inputs["Begin For-Each Loop"].links[0].from_node.execute(self.get_scope_context(), forced)
+            and self.inputs["Array"].execute(self.get_scope_context(), forced)
         )
     
     def error_condition(self):
@@ -31,10 +31,13 @@ class ScEndForEachLoop(Node, ScNode):
         )
     
     def functionality(self):
+        context_id = self.get_scope_context_id()        
         for i in eval(self.inputs["Array"].default_value):
+            self.increment_scope_context_id()
             self.inputs["Begin For-Each Loop"].links[0].from_node.out_index += 1
             self.inputs["Begin For-Each Loop"].links[0].from_node.out_element = repr(i)
-            self.inputs["In"].execute(True)
+            self.inputs["In"].execute(self.get_scope_context(), False)
+        self.restore_scope_context_id(context_id)
         self.inputs["Begin For-Each Loop"].links[0].from_node.prop_locked = False
     
     def post_execute(self):

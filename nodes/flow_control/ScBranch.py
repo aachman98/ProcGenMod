@@ -18,11 +18,11 @@ class ScBranch(Node, ScNode):
         self.outputs.new("ScNodeSocketUniversal", "Value")
     
     def init_in(self, forced):
-        if (self.inputs["Condition"].execute(forced)):
+        if (self.inputs["Condition"].execute(self.get_scope_context(), forced)):
             if (self.inputs["Condition"].default_value):
-                return self.inputs["True"].execute(forced)
+                return self.inputs["True"].execute(self.get_scope_context(), forced)
             else:
-                return self.inputs["False"].execute(forced)
+                return self.inputs["False"].execute(self.get_scope_context(), forced)
         return False
     
     def post_execute(self):

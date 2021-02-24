@@ -17,7 +17,7 @@ class ScMakeArray(Node, ScNode):
         for i in self.inputs:
             if (not i.bl_rna.name == "ScNodeSocketArrayPlaceholder"):
                 if (i.is_linked):
-                    if (not i.execute(forced)):
+                    if (not i.execute(self.get_scope_context(), forced)):
                         return False
                 else:
                     self.inputs.remove(i)

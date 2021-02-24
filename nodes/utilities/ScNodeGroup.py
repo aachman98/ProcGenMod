@@ -33,7 +33,7 @@ class ScNodeGroup(ScNode, NodeCustomGroup):
     
     def functionality(self):
         for i in range(0, len(self.outputs)):
-            if (not self.node_tree.nodes['Group Output'].inputs[i].execute(False)):
+            if (not self.node_tree.nodes['Group Output'].inputs[i].execute(self.get_scope_context(), False)):
                 break
         self.id_data.objects.extend(self.node_tree.objects)
     

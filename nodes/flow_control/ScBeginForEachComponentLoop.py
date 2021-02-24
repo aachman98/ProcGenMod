@@ -21,7 +21,7 @@ class ScBeginForEachComponentLoop(Node, ScNode):
         self.outputs.new("ScNodeSocketObject", "Out")
         self.outputs.new("ScNodeSocketNumber", "Index")
     
-    def execute(self, forced=False):
+    def execute(self, scope_context, forced=False):
         if (self.prop_locked):
             self.outputs["Index"].default_value = self.out_index
             self.set_color()
@@ -29,7 +29,7 @@ class ScBeginForEachComponentLoop(Node, ScNode):
         else:
             self.prop_locked = True
             self.out_index = 0
-            return super().execute(forced)
+            return super().execute(scope_context, forced)
     
     def pre_execute(self):
         bpy.ops.object.mode_set(mode="OBJECT")

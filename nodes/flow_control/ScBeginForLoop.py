@@ -23,7 +23,7 @@ class ScBeginForLoop(Node, ScNode):
         self.outputs.new("ScNodeSocketUniversal", "Out")
         self.outputs.new("ScNodeSocketNumber", "Counter")
     
-    def execute(self, forced=False):
+    def execute(self, scope_context, forced=False):
         if (self.prop_locked):
             self.outputs["Counter"].default_value = self.out_counter
             self.set_color()
@@ -31,7 +31,7 @@ class ScBeginForLoop(Node, ScNode):
         else:
             self.prop_locked = True
             self.out_counter = 0
-            return super().execute(forced)
+            return super().execute(scope_context, forced)
     
     def post_execute(self):
         out = {}

@@ -48,7 +48,10 @@ class ScNodeTree(NodeTree):
         for i in self.nodes:
             if (hasattr(i, "reset")):
                 i.reset(execute)
-    
+
+    def create_scope_context(self):
+        return {"id":0}
+
     def update_links(self):
         for i in self.links:
             if not (i.to_socket.bl_rna.name == i.from_socket.bl_rna.name):
@@ -74,7 +77,8 @@ class ScNodeTree(NodeTree):
             self.unregister_all_objects()
             if (hasattr(n, "execute")):
                 print_log(msg="---EXECUTE NODE---")
-                if (not n.execute()):
+                scope_context = self.create_scope_context()
+                if (not n.execute(scope_context)):
                     print_log(self.name, msg="Failed to execute...")
                 else:
                     print_log(self.name, msg="Executed successfully!")

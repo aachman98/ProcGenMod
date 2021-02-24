@@ -13,7 +13,7 @@ class ScBevel(Node, ScEditOperatorNode):
     in_offset: FloatProperty(min=0.0, max=1000000.0, update=ScNode.update_value)
     in_segments: IntProperty(default=1, min=1, max=1000, update=ScNode.update_value)
     in_profile: FloatProperty(default=0.5, min=0.15, max=1.0, update=ScNode.update_value)
-    in_vertex_only: BoolProperty(update=ScNode.update_value)
+    in_affect: EnumProperty(items=[("VERTICES", "Vertices", ""), ("EDGES", "Edges", "")], default="EDGES", update=ScNode.update_value)
     in_clamp_overlap: BoolProperty(update=ScNode.update_value)
     in_loop_slide: BoolProperty(default=True, update=ScNode.update_value)
     in_mark_seam: BoolProperty(update=ScNode.update_value)
@@ -31,7 +31,7 @@ class ScBevel(Node, ScEditOperatorNode):
         self.inputs.new("ScNodeSocketNumber", "Offset").init("in_offset", True)
         self.inputs.new("ScNodeSocketNumber", "Segments").init("in_segments", True)
         self.inputs.new("ScNodeSocketNumber", "Profile").init("in_profile")
-        self.inputs.new("ScNodeSocketBool", "Vertex Only").init("in_vertex_only", True)
+        self.inputs.new("ScNodeSocketString", "Affect").init("in_affect")
         self.inputs.new("ScNodeSocketBool", "Clamp Overlap").init("in_clamp_overlap")
         self.inputs.new("ScNodeSocketBool", "Loop Slide").init("in_loop_slide")
         self.inputs.new("ScNodeSocketBool", "Mark Seams").init("in_mark_seam")
@@ -51,6 +51,7 @@ class ScBevel(Node, ScEditOperatorNode):
             or (self.inputs["Offset"].default_value < 0.0 or self.inputs["Offset"].default_value > 1000000.0)
             or (int(self.inputs["Segments"].default_value) < 1 or int(self.inputs["Segments"].default_value) > 1000)
             or (self.inputs["Profile"].default_value < 0.15 or self.inputs["Profile"].default_value > 1)
+            or (not self.inputs["Affect"].default_value in ['VERTICES', 'EDGES'])
             or int(self.inputs["Material"].default_value) < -1
             or (not self.inputs["Face Strength Mode"].default_value in ['NONE', 'NEW', 'AFFECTED', 'ALL'])
             or (not self.inputs["Outer Miter"].default_value in ['SHARP', 'PATCH', 'ARC'])
@@ -65,7 +66,7 @@ class ScBevel(Node, ScEditOperatorNode):
             offset_pct = self.inputs["Offset"].default_value,
             segments = int(self.inputs["Segments"].default_value),
             profile = self.inputs["Profile"].default_value,
-            vertex_only = self.inputs["Vertex Only"].default_value,
+            affect = self.inputs["Affect"].default_value,
             clamp_overlap = self.inputs["Clamp Overlap"].default_value,
             loop_slide = self.inputs["Loop Slide"].default_value,
             mark_seam = self.inputs["Mark Seams"].default_value,

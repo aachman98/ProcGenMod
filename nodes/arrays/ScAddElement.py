@@ -24,8 +24,8 @@ class ScAddElement(Node, ScNode):
         out = {}
         arr = eval(self.inputs["Array"].default_value)
         if (self.inputs["Use Index"].default_value):
-            arr.insert(int(self.inputs["Index"].default_value), self.inputs["Element"].default_value)
+            arr.insert(int(self.inputs["Index"].default_value), eval(self.inputs["Element"].default_value))
         else:
-            arr.append(self.inputs["Element"].default_value)
+            arr.append(eval(self.inputs["Element"].default_value))
         out["New Array"] = repr(arr)
         return out

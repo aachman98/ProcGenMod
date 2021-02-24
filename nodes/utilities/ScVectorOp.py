@@ -12,7 +12,7 @@ class ScVectorOp(Node, ScNode):
     in_x: FloatVectorProperty(update=ScNode.update_value)
     in_y: FloatVectorProperty(update=ScNode.update_value)
     in_k: FloatProperty(update=ScNode.update_value)
-    in_op: EnumProperty(name="Operation", items=[("ADD", "X + Y", "Addition"), ("SUB", "X - Y", "Subtraction"), ("MULT", "K * X", "Multiplication by Scalar"), ("CROSS", "X * Y", "Cross Product"), ("DOT", "X . Y", "Dot Product"), ("ANGLE", "Angle", ""), ("PROJ", "Project", ""), ("REFL", "Reflect", "Mirror"), ("ROT", "Rotation Difference", "Rotation Difference"), ("NORM", "Normalise X", "Unit Vector"), ("ORTHO", "Orthogonal X", "Perpendicular"), ("LERP", "Lerp", "Linear Interpolate"), ("SLERP", "S-Lerp", "Spherical Interpolate")], default="ADD", update=ScNode.update_value)
+    in_op: EnumProperty(name="Operation", items=[("ADD", "X + Y", "Addition"), ("SUB", "X - Y", "Subtraction"), ("MULT", "K * X", "Multiplication by Scalar"), ("VECTORMULT", "X * Y", "Multiplication by Vector"), ("CROSS", "X cross Y", "Cross Product"), ("DOT", "X dot Y", "Dot Product"), ("ANGLE", "Angle", ""), ("PROJ", "Project", ""), ("REFL", "Reflect", "Mirror"), ("ROT", "Rotation Difference", "Rotation Difference"), ("NORM", "Normalise X", "Unit Vector"), ("ORTHO", "Orthogonal X", "Perpendicular"), ("LERP", "Lerp", "Linear Interpolate"), ("SLERP", "S-Lerp", "Spherical Interpolate")], default="ADD", update=ScNode.update_value)
 
     def init(self, context):
         super().init(context)
@@ -24,7 +24,7 @@ class ScVectorOp(Node, ScNode):
     
     def error_condition(self):
         return (
-            (not self.inputs["Operation"].default_value in ["ADD", "SUB", "MULT", "CROSS", "DOT", "ANGLE", "PROJ", "REFL", "ROT", "NORM", "ORTHO", "LERP", "SLERP"])
+            (not self.inputs["Operation"].default_value in ["ADD", "SUB", "MULT", "VECTORMULT", "CROSS", "DOT", "ANGLE", "PROJ", "REFL", "ROT", "NORM", "ORTHO", "LERP", "SLERP"])
             or (self.inputs["Operation"].default_value == "LERP" and (self.inputs["K"].default_value < 0 or self.inputs["K"].default_value > 1))
         )
 
@@ -36,6 +36,10 @@ class ScVectorOp(Node, ScNode):
             out["Value"] = Vector(self.inputs["X"].default_value) - Vector(self.inputs["Y"].default_value)
         elif (self.inputs["Operation"].default_value == 'MULT'):
             out["Value"] = Vector(self.inputs["X"].default_value) * self.inputs["K"].default_value
+        elif (self.inputs["Operation"].default_value == 'VECTORMULT'):
+            x_vec = Vector(self.inputs["X"].default_value)
+            y_vec = Vector(self.inputs["Y"].default_value)
+            out["Value"] = Vector((x_vec.x * y_vec.x, x_vec.y * y_vec.y, x_vec.z * y_vec.z))
         elif (self.inputs["Operation"].default_value == 'CROSS'):
             out["Value"] = Vector(self.inputs["X"].default_value).cross(Vector(self.inputs["Y"].default_value))
         elif (self.inputs["Operation"].default_value == 'DOT'):
